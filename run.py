@@ -1,9 +1,17 @@
 #%%
 from eva import evolutionary_vector_architecture as eva
-from SW import smith_waterman
 import random
 import itertools as itools
 import os
+import sys
+
+def args():
+    get_gen = 4
+    for idx, arg in enumerate(sys.argv):
+        if arg in ('--gentime' or '-g'):
+            get_gen = int(sys.argv[idx + 1])
+
+    return get_gen
 
 def eva_sequence_generator():
     seq_size = random.randrange(8, 11)
@@ -14,9 +22,10 @@ def eva_sequence_generator():
     return eva_seq
 
 def main():
+    gentime = args()
     os.system('clear')
     eva_seq = eva_sequence_generator()
-    eva_object = eva(eva_seq)
+    eva_object = eva(eva_seq, gentime=gentime)
     pool, generations = eva_object.life()
     print(f'\n{generations - 1} gerações bem-sucedidas')
 
